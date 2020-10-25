@@ -1,20 +1,35 @@
 # This project provides a detailed flow of ml problem solving steps.
+* These are my notes combined with california sensus example from Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow book 2nd edition.
+* The notes and source code are written by me while going through the book's tutorials. 
+* The dataset is provided via the book's tutorials.
 
-## Dataset
+## 0. Pre-req
+* Install visual studio code. Install python extension
+* Install anaconda
+* Open anaconda cmd to install all the required modules.
+  * conda install python=3.6
+  * conda install -c conda-forge jupyterlab
+  * conda install numpy
+  * conda install pandas
+  * conda install -c conda-forge matplotlib
+  * conda install -c intel scikit-learn
+* on vscode, ctrl+shift+p to open command pallet and run create new jupyter...
+
+## 1. Dataset
 population, median income, median housing price for each block group in California.
 
-## model goal
+## 2. Model goal
 predict housing price in any district
 
-## Framing the problem
+## 3. Framing the problem
 
-### Identifying business objective.
+### 3.1 Identifying business objective.
 * Output of the model will go through another ml system with other values to determine if investiment in a given area is worth it
 
-### Identify current situation
+### 3.2 Identify current situation
 * Users are manually estimating, and this is expensive.
 
-### choose ml type
+### 3.3 Choose ml type
 1. Supervised, unsupervised, or reinforcement learning? 
     * supervised since we are labeling training examples
 2. Classification task, regresshion task, or something else? 
@@ -22,7 +37,7 @@ predict housing price in any district
 3. Batch learning, or online learning? 
     * Batch will be chosen because there won't be a continuous flow of data. No need for rapid adjustment.
 
-### Selecting a performance measure
+### 3.4 Selecting a performance measure
 * we choose Root Mean Square Error to give an idea of how much error the system typically makes in its prediction with higher weit on large errors.
 
 ![image info](./notes-images/rmse.jpg)
@@ -35,11 +50,11 @@ predict housing price in any district
 * the higher the norm index, the more it focuses on large values and neglects small ones. This is why RMSE is more sensitive to outliers than MAE. 
 * When outliers are rare, RMSE works very well.
 
-### Check the assumptions
+### 3.5 Check the assumptions
 Check with people if the assumptions are correct. For example, is the business objective correct? do we care really care about pricing for this model pipeline or should we care about another output because that's the input to another ml pipeline.
 
-### Get the data
-
+## 4. Getting start
+* See Housing.jpynb for code example
 
 ## Glossary
 ### Pipelines
