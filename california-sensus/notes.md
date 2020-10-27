@@ -53,8 +53,24 @@ predict housing price in any district
 ### 3.5 Check the assumptions
 Check with people if the assumptions are correct. For example, is the business objective correct? do we care really care about pricing for this model pipeline or should we care about another output because that's the input to another ml pipeline.
 
-## 4. Getting start
+### 4. Getting start
 * See Housing.jpynb for code example
+* Make sure label values are not capped. ML may learn the value never go beyond that limit. (readjust the values, or remove them from the training and test dataset)
+* Take notice of attributes not in unit of choice. it's ok but make sure we understand how its computed.
+* Take notice of different scales, we'll need to explore scaling feature later.
+* Take notice of histograms that are tail-heavy. ML doesn't work well with it for detecting patterns. We'll try to transform it into bell curves later.
+
+### 5. Create a test set
+* Set aside some data (20%) randomly to be used as test set (NEVER LOOK AT IT). The human brain is good at pattern detection, thus highly prone to overfitting. If we look at the test set, we may latch onto some patterns in the test set that cause us to choose specific type of ML models solutions.
+* The training set and test set is created in jupyter notebook. The same can be achieved by using Sci-Kit library in 5.2 for creating single run train test split.
+  
+### 5.1 Repeatable train_test split data
+* One thing to note is, THIS ONLY WORKS WELL IF RAN ONCE. If this gets ran again, the test set will change. We don't want to generate a new testset after every run where over time the ML algorithm will see the entire dataset because the test set will be mixed into the new training set, or previous training set we already saw is now in new test set.
+* Some options that won't work: (Storing it for later won't work because if we update the dataset, it won't have any new values. If we pre-seed the randomizer, a update to the dataset will still generate random values where training set may include data from previous test set)
+* Common solution to ensure test set is consistent and new instances added to the test set never include values part of previous training set: Computer a hash of each instance's idenfier and put that instance in the test set if the has is lower than or equal to 20^ of the max hash value. => test set will remain consistent across multiple runs. Even after refreshing the dataset, the new test set will contain 20% of the new instances, but not any instances previously used in training set. (Example id = 45554, 45554 % 6 = value 2). see hash method in jupyter notebook.
+
+### 5.2 Create run once train_test split with Sci-Kit library.
+If we only want to create the split once, we can use Sci-Kit's 
 
 ## Glossary
 ### Pipelines
