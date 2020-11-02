@@ -32,7 +32,7 @@ predict housing price in any district
 ### 3.3 Choose ml type
 1. Supervised, unsupervised, or reinforcement learning? 
     * supervised since we are labeling training examples
-2. Classification task, regresshion task, or something else? 
+2. Classification task, regression task, or something else? 
     * regression since we are predicting a value. univariate regression because we predict a single value. if we were predicting multiple values per district it would be multivariate regression.
 3. Batch learning, or online learning? 
     * Batch will be chosen because there won't be a continuous flow of data. No need for rapid adjustment.
@@ -54,23 +54,27 @@ predict housing price in any district
 Check with people if the assumptions are correct. For example, is the business objective correct? do we care really care about pricing for this model pipeline or should we care about another output because that's the input to another ml pipeline.
 
 ### 4. Getting start
-* See Housing.jpynb for code example
+* See Housing.jpynb for code example and steps
 * Make sure label values are not capped. ML may learn the value never go beyond that limit. (readjust the values, or remove them from the training and test dataset)
 * Take notice of attributes not in unit of choice. it's ok but make sure we understand how its computed.
 * Take notice of different scales, we'll need to explore scaling feature later.
 * Take notice of histograms that are tail-heavy. ML doesn't work well with it for detecting patterns. We'll try to transform it into bell curves later.
 
-### 5. Create a test set
+#### 4.1 Create a test set
 * Set aside some data (20%) randomly to be used as test set (NEVER LOOK AT IT). The human brain is good at pattern detection, thus highly prone to overfitting. If we look at the test set, we may latch onto some patterns in the test set that cause us to choose specific type of ML models solutions.
 * The training set and test set is created in jupyter notebook. The same can be achieved by using Sci-Kit library in 5.2 for creating single run train test split.
   
-### 5.1 Repeatable train_test split data
+#### 4.2 Repeatable train_test split data
 * One thing to note is, THIS ONLY WORKS WELL IF RAN ONCE. If this gets ran again, the test set will change. We don't want to generate a new testset after every run where over time the ML algorithm will see the entire dataset because the test set will be mixed into the new training set, or previous training set we already saw is now in new test set.
 * Some options that won't work: (Storing it for later won't work because if we update the dataset, it won't have any new values. If we pre-seed the randomizer, a update to the dataset will still generate random values where training set may include data from previous test set)
 * Common solution to ensure test set is consistent and new instances added to the test set never include values part of previous training set: Computer a hash of each instance's idenfier and put that instance in the test set if the has is lower than or equal to 20^ of the max hash value. => test set will remain consistent across multiple runs. Even after refreshing the dataset, the new test set will contain 20% of the new instances, but not any instances previously used in training set. (Example id = 45554, 45554 % 6 = value 2). see hash method in jupyter notebook.
 
-### 5.2 Create run once train_test split with Sci-Kit library.
-If we only want to create the split once, we can use Sci-Kit's 
+#### 4.3 Create run once train_test split with Sci-Kit library.
+* If we only want to create the split once, we can use Sci-Kit's sklearn.model_selection import train_test_split
+* These are purely ranom sampling, which works fine if the dataset is large relative to number of attributes. 
+* If not, these are risks for sampling bias. Stratified sampling should be used, such that the right number of instances are sampled from each stratum to ensure the test set is representative of everything. 
+* Look at medium income for example. You want the dataset to be representative of the various categories. Since medium income is a continuous numerical value, first create a income category attribute.
+* Looking at medium income histogram, most income are cluistered around 1.5 to 6. Some go far beyond 6. We need to ensure enough instances in each stratum. Otherwise, the estimate of a stratum's importance is biased.
 
 ## Glossary
 ### Pipelines
