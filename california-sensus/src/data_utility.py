@@ -38,3 +38,8 @@ def split_train_test_multi_run(data, ratio, id_column):
     # foreach id in the array, filter set of ids where the id converts to 64bit integer, masked to only 32 bit lsb, 
     test_set = ids.apply(lambda id: zlib.crc32(numpy.int64(id)) & 0xffffffff < ratio * 2 ** 32) 
     return data.loc[~test_set], data.loc[test_set]
+
+def display_scores(scores):
+    print("Scores:", scores)
+    print("Mean:", scores.mean())
+    print("Standard deviation:", scores.std())
